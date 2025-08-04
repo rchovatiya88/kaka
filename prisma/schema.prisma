@@ -87,10 +87,10 @@ model StoryTemplate {
 
 model Story {
   id                    String      @id @default(cuid())
-  userId                String
+  userId                String?     // Made optional for guest users
   templateId            String?
   title                 String
-  childName             String
+  childName             String?     // Made optional
   ageGroup              String      // 3-5, 6-8, 9-12, teen
   theme                 String
   length                String      // short, medium, long
@@ -100,12 +100,21 @@ model Story {
   includeAudio          Boolean     @default(false)
   language              String      @default("en")
   metadata              Json?       // Generation parameters, AI model used, etc.
+  
+  // Shopify Integration Fields
+  shopifyProductId      String?     // Shopify product ID
+  shopifyVariantId      String?     // Shopify variant ID  
+  price                 Float?      // Product price
+  content               String?     // Full story content
+  characters            String?     // JSON string of characters
+  ageRange              String?     // Age range for story
+  
   createdAt             DateTime    @default(now())
   updatedAt             DateTime    @updatedAt
   publishedAt           DateTime?
   
   // Relationships
-  user                  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                  User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   template              StoryTemplate? @relation(fields: [templateId], references: [id])
   pages                 StoryPage[]
   audioFiles            AudioFile[]
