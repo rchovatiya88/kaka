@@ -1,0 +1,4 @@
+{
+  "name": "storybook-generator",
+  "welcome": "Welcome to the {{target}} extension!"
+}

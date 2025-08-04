@@ -30,3 +30,170 @@ model Session {
   collaborator  Boolean?  @default(false)
   emailVerified Boolean?  @default(false)
 }
+
+// Core business entities
+model Shop {
+  id            String    @id @default(cuid())
+  shopDomain    String    @unique
+  shopName      String?
+  email         String?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  shopSettings  Json?
+  
+  // Relationships
+  users         User[]
+  
+  @@map("shops")
+}
+
+model User {
+  id          String    @id @default(cuid())
+  shopId      String
+  email       String
+  firstName   String?
+  lastName    String?
+  role        String    @default("user") // user, admin, owner
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  preferences Json?
+  
+  // Relationships
+  shop        Shop      @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  stories     Story[]
+  userPreferences UserPreference[]
+  
+  @@unique([shopId, email])
+  @@map("users")
+}
+
+model StoryTemplate {
+  id              String    @id @default(cuid())
+  name            String
+  theme           String
+  description     String?
+  structure       Json      // Page count, narrative structure
+  promptTemplates Json      // AI prompts for different story elements
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  
+  // Relationships
+  stories         Story[]
+  
+  @@map("story_templates")
+}
+
+model Story {
+  id                    String      @id @default(cuid())
+  userId                String
+  templateId            String?
+  title                 String
+  childName             String
+  ageGroup              String      // 3-5, 6-8, 9-12, teen
+  theme                 String
+  length                String      // short, medium, long
+  characterDescription  String?
+  specialRequests       String?
+  status                String      @default("draft") // draft, generating, completed, failed
+  includeAudio          Boolean     @default(false)
+  language              String      @default("en")
+  metadata              Json?       // Generation parameters, AI model used, etc.
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  publishedAt           DateTime?
+  
+  // Relationships
+  user                  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template              StoryTemplate? @relation(fields: [templateId], references: [id])
+  pages                 StoryPage[]
+  audioFiles            AudioFile[]
+  images                ImageAsset[]
+  shares                StoryShare[]
+  
+  @@map("stories")
+}
+
+model StoryPage {
+  id           String      @id @default(cuid())
+  storyId      String
+  pageNumber   Int
+  content      String?     // Generated story text
+  imagePrompt  String?     // AI image generation prompt
+  imageUrl     String?     // Generated/uploaded image URL
+  audioUrl     String?     // Audio narration URL
+  layoutData   Json?       // Page layout and styling data
+  createdAt    DateTime    @default(now())
+  
+  // Relationships
+  story        Story       @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  images       ImageAsset[]
+  audioFiles   AudioFile[]
+  
+  @@unique([storyId, pageNumber])
+  @@map("story_pages")
+}
+
+model AudioFile {
+  id          String      @id @default(cuid())
+  storyId     String
+  pageId      String?
+  audioUrl    String
+  voiceId     String?     // AI voice identifier
+  duration    Int?        // Duration in seconds
+  status      String      @default("pending") // pending, processing, completed, failed
+  createdAt   DateTime    @default(now())
+  
+  // Relationships
+  story       Story       @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  page        StoryPage?  @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  
+  @@map("audio_files")
+}
+
+model ImageAsset {
+  id          String      @id @default(cuid())
+  storyId     String
+  pageId      String?
+  imageUrl    String
+  prompt      String?     // Generation prompt
+  style       String?     // Art style used
+  metadata    Json?       // Generation parameters, dimensions, etc.
+  createdAt   DateTime    @default(now())
+  
+  // Relationships
+  story       Story       @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  page        StoryPage?  @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  
+  @@map("image_assets")
+}
+
+model UserPreference {
+  id          String      @id @default(cuid())
+  userId      String
+  key         String      // preference key (e.g., "default_age_group", "preferred_voice")
+  value       Json        // preference value
+  updatedAt   DateTime    @updatedAt
+  
+  // Relationships
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, key])
+  @@map("user_preferences")
+}
+
+model StoryShare {
+  id          String      @id @default(cuid())
+  storyId     String
+  shareToken  String      @unique @default(cuid())
+  isPublic    Boolean     @default(false)
+  expiresAt   DateTime?
+  viewCount   Int         @default(0)
+  createdAt   DateTime    @default(now())
+  
+  // Relationships
+  story       Story       @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  
+  @@map("story_shares")
+}

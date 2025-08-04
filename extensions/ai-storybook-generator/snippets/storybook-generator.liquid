@@ -1,0 +1,64 @@
+<div class="storybook-generator-block">
+  <h1 class="storybook-title">
+    {{ settings.title | default: "AI Storybook Generator" }}
+  </h1>
+  
+  <p class="storybook-description">
+    {{ settings.description | default: "Choose a magical theme and create personalized storybooks for children!" }}
+  </p>
+
+  <div id="storybook-success" class="storybook-success-message">
+    Storybook created successfully! 📚✨
+  </div>
+
+  <div id="storybook-error" class="storybook-error-message">
+    Something went wrong. Please try again.
+  </div>
+
+  <div id="theme-selection" class="storybook-themes">
+    <div class="theme-card" data-theme="enchanted-manga">
+      <span class="theme-icon">�</span>
+      <h3>Enchanted Manga</h3>
+      <p>Magical adventures with anime-style characters in mystical worlds</p>
+      <button class="theme-select-btn">
+        Create Story
+      </button>
+    </div>
+
+    <div class="theme-card" data-theme="underwater-explorer">
+      <span class="theme-icon">🌊</span>
+      <h3>Underwater Explorer</h3>
+      <p>Dive deep into ocean adventures with sea creatures and coral reefs</p>
+      <button class="theme-select-btn">
+        Create Story
+      </button>
+    </div>
+
+    <div class="theme-card" data-theme="space-adventure">
+      <span class="theme-icon">🚀</span>
+      <h3>Space Adventure</h3>
+      <p>Blast off to distant planets and meet friendly aliens in space</p>
+      <button class="theme-select-btn">
+        Create Story
+      </button>
+    </div>
+
+    <div class="theme-card" data-theme="world-explorer">
+      <span class="theme-icon">🗺️</span>
+      <h3>World Explorer</h3>
+      <p>Journey around the world discovering new cultures and landmarks</p>
+      <button class="theme-select-btn">
+        Create Story
+      </button>
+    </div>
+  </div>
+
+  <div id="storybook-app" class="storybook-app-container" style="display: none;">
+    <div class="app-header">
+      <button id="back-to-themes" class="back-to-themes-btn">
+        ← Back to Themes
+      </button>
+    </div>
+    <iframe id="storybook-iframe" class="storybook-iframe" src=""></iframe>
+  </div>
+</div>

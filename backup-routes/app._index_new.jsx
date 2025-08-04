@@ -13,9 +13,10 @@ import {
   Icon,
 } from "@shopify/polaris";
 import {
-  GlobeIcon,
-  MagicIcon,
-  StarIcon,
+  WorldMajor,
+  MagicMajor,
+  RocketMajor,
+  FishMajor,
 } from "@shopify/polaris-icons";
 
 export const loader = async ({ request }) => {
@@ -36,7 +37,7 @@ export default function Index() {
       title: "Enchanted Manga",
       description: "Magical worlds with anime-style artwork and whimsical adventures",
       previewImages: ["/preview-manga-1.jpg", "/preview-manga-2.jpg"],
-      icon: MagicIcon,
+      icon: MagicMajor,
       color: "#FF6B9D",
       features: ["Anime-style illustrations", "Fantasy creatures", "Magic spells"]
     },
@@ -45,7 +46,7 @@ export default function Index() {
       title: "Underwater Explorer",
       description: "Deep sea adventures with colorful marine life and hidden treasures",
       previewImages: ["/preview-underwater-1.jpg", "/preview-underwater-2.jpg"],
-      icon: StarIcon,
+      icon: FishMajor,
       color: "#4ECDC4",
       features: ["Ocean exploration", "Marine creatures", "Treasure hunting"]
     },
@@ -54,7 +55,7 @@ export default function Index() {
       title: "Space Adventure",
       description: "Cosmic journeys through galaxies with alien friends and spaceships",
       previewImages: ["/preview-space-1.jpg", "/preview-space-2.jpg"],
-      icon: StarIcon,
+      icon: RocketMajor,
       color: "#6B73FF",
       features: ["Space exploration", "Alien encounters", "Spaceship adventures"]
     },
@@ -63,7 +64,7 @@ export default function Index() {
       title: "World Explorer",
       description: "Cultural adventures around the globe with landmarks and traditions",
       previewImages: ["/preview-world-1.jpg", "/preview-world-2.jpg"],
-      icon: GlobeIcon,
+      icon: WorldMajor,
       color: "#FFA726",
       features: ["Cultural exploration", "World landmarks", "Global traditions"]
     }
@@ -143,21 +144,21 @@ export default function Index() {
                 </Text>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '30px' }}>
                   <BlockStack gap="200" inlineAlign="center">
-                    <Icon source={MagicIcon} tone="primary" />
+                    <Icon source={MagicMajor} tone="primary" />
                     <Text variant="headingMd" alignment="center">Personalized Stories</Text>
                     <Text alignment="center" tone="subdued">
                       Every story features your child as the main character with their unique traits and preferences
                     </Text>
                   </BlockStack>
                   <BlockStack gap="200" inlineAlign="center">
-                    <Icon source={GlobeIcon} tone="primary" />
+                    <Icon source={WorldMajor} tone="primary" />
                     <Text variant="headingMd" alignment="center">Diverse Themes</Text>
                     <Text alignment="center" tone="subdued">
                       Choose from magical adventures, underwater explorations, space journeys, and world discoveries
                     </Text>
                   </BlockStack>
                   <BlockStack gap="200" inlineAlign="center">
-                    <Icon source={StarIcon} tone="primary" />
+                    <Icon source={RocketMajor} tone="primary" />
                     <Text variant="headingMd" alignment="center">AI-Powered</Text>
                     <Text alignment="center" tone="subdued">
                       Advanced AI creates unique, engaging stories tailored to your child's age and interests

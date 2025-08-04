@@ -1,0 +1,8 @@
+name = "AI Storybook Generator"
+handle = "ai-storybook-generator"
+type = "theme"
+
+[extension_points]
+
+[[extension_points.targets]]
+target = "section"

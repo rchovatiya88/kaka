@@ -1,0 +1,35 @@
+{{ 'storybook-generator.css' | asset_url | stylesheet_tag }}
+
+<div class="storybook-generator-section">
+  {% render 'storybook-generator', block: block %}
+</div>
+
+<script src="{{ 'storybook-generator.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "AI Storybook Generator",
+  "target": "section",
+  "class": "storybook-generator",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Create Your Child's Personalized Storybook"
+    },
+    {
+      "type": "textarea",
+      "id": "description", 
+      "label": "Description",
+      "default": "Choose from magical themes and create a unique adventure story featuring your child as the hero!"
+    },
+    {
+      "type": "text",
+      "id": "app_url",
+      "label": "App URL (Development)",
+      "info": "Leave blank to use the default development URL. Update this for production."
+    }
+  ]
+}
+{% endschema %}

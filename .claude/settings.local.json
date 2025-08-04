@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(shopify app dev:*)",
+      "Bash(chmod:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)"
+    ],
+    "deny": []
+  }
+}

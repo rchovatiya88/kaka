@@ -1,4 +1,6 @@
 import { useParams, useNavigate, useFetcher } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
+import { authenticate } from "../shopify.server";
 import {
   Page,
   Layout,
@@ -10,15 +12,12 @@ import {
   Card,
 } from "@shopify/polaris";
 import {
-  BookMajor,
-  EditMajor,
-  ViewMajor,
-  TransactionMajor, // Trying TransactionMajor
+  BookIcon,
+  EditIcon,
+  CheckIcon, // Using CheckIcon - compatible with polaris-icons v8.11.1
 } from "@shopify/polaris-icons";
 import { useEffect } from "react";
-
-// We will create and import StoryCreatorForm in the next step
-// import StoryCreatorForm from "../components/StoryCreatorForm";
+import StoryCreatorForm from "../components/StoryCreatorForm";
 
 // Helper to format theme name for display (e.g., "enchanted-manga" -> "Enchanted Manga")
 const formatThemeName = (themeId) => {
@@ -30,13 +29,43 @@ const formatThemeName = (themeId) => {
 };
 
 const progressSteps = [
-  { id: "theme", label: "Theme", icon: BookMajor, progress: 0 },
-  { id: "customize", label: "Customize", icon: EditMajor, progress: 33 },
-  { id: "preview", label: "Preview", icon: ViewMajor, progress: 66 },
-  { id: "checkout", label: "Checkout", icon: TransactionMajor, progress: 100 },
+  { id: "theme", label: "Theme", icon: BookIcon, progress: 0 },
+  { id: "customize", label: "Customize", icon: EditIcon, progress: 33 },
+  { id: "preview", label: "Preview", icon: CheckIcon, progress: 66 },
+  { id: "checkout", label: "Checkout", icon: CheckIcon, progress: 100 },
 ];
 
 const currentStepId = "customize"; // This page represents the "Customize" step
+
+export const action = async ({ request }) => {
+  const { session } = await authenticate.admin(request);
+  
+  try {
+    // Forward the form data to the stories API
+    const response = await fetch(`${new URL(request.url).origin}/api/v1/stories`, {
+      method: 'POST',
+      body: await request.formData(),
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      return json({ error: error.details || error.error || 'Story generation failed' });
+    }
+    
+    const data = await response.json();
+    
+    if (data.success && data.story) {
+      // Story generated successfully, redirect to view page
+      return redirect(`/app/stories/${data.story.id}`);
+    } else {
+      return json({ error: 'Story generation failed' });
+    }
+    
+  } catch (error) {
+    console.error('Create story action error:', error);
+    return json({ error: 'An unexpected error occurred during story generation' });
+  }
+};
 
 export default function CreateStoryPage() {
   const { theme } = useParams();
@@ -87,8 +116,8 @@ export default function CreateStoryPage() {
               </BlockStack>
             </Card>
 
-            {/* StoryCreatorForm will be rendered here in the next step */}
-            {/* <StoryCreatorForm theme={theme} fetcher={fetcher} /> */}
+            {/* Story Creator Form */}
+            <StoryCreatorForm theme={theme} fetcher={fetcher} />
 
             {fetcher.data?.error && (
               <Text tone="critical">{fetcher.data.error}</Text>

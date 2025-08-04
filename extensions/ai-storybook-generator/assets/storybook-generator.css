@@ -1,0 +1,275 @@
+/* AI Storybook Generator Theme Extension Styles */
+
+.storybook-generator-section {
+  --storybook-primary: #667eea;
+  --storybook-secondary: #764ba2;
+  --storybook-success: #28a745;
+  --storybook-warning: #ffc107;
+  --storybook-danger: #dc3545;
+  --storybook-light: #f8f9fa;
+  --storybook-dark: #343a40;
+}
+
+.storybook-generator-block {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.storybook-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.storybook-description {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  color: #666;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.storybook-themes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.theme-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  color: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.theme-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.theme-card[data-theme="enchanted-manga"] {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+}
+
+.theme-card[data-theme="underwater-explorer"] {
+  background: linear-gradient(135deg, #00c6fb 0%, #005bea 100%);
+}
+
+.theme-card[data-theme="space-adventure"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.theme-card[data-theme="world-explorer"] {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.theme-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.theme-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.theme-card p {
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.theme-select-btn {
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.theme-select-btn:hover {
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
+  transform: scale(1.05);
+}
+
+.storybook-app-container {
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.app-header {
+  background: #fff;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.back-to-themes-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.back-to-themes-btn:hover {
+  background: #5a6268;
+}
+
+.storybook-iframe {
+  width: 100%;
+  height: 800px;
+  border: none;
+  display: block;
+}
+
+/* Loading Animation */
+.storybook-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: storybook-spin 1s ease-in-out infinite;
+}
+
+@keyframes storybook-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Success Message */
+.storybook-success-message {
+  background: var(--storybook-success);
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin: 1rem 0;
+  display: none;
+}
+
+.storybook-success-message.show {
+  display: block;
+  animation: storybook-fadeIn 0.3s ease;
+}
+
+/* Error Message */
+.storybook-error-message {
+  background: var(--storybook-danger);
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin: 1rem 0;
+  display: none;
+}
+
+.storybook-error-message.show {
+  display: block;
+  animation: storybook-fadeIn 0.3s ease;
+}
+
+@keyframes storybook-fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .storybook-generator-block {
+    padding: 1rem 0.5rem;
+  }
+  
+  .storybook-title {
+    font-size: 2rem;
+  }
+  
+  .storybook-themes {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .theme-card {
+    padding: 1.5rem;
+  }
+  
+  .storybook-iframe {
+    height: 600px;
+  }
+}
+
+@media (max-width: 480px) {
+  .storybook-generator-block {
+    padding: 1rem 0.5rem;
+  }
+  
+  .theme-card {
+    padding: 1rem;
+  }
+  
+  .theme-icon {
+    font-size: 2.5rem;
+  }
+  
+  .theme-card h3 {
+    font-size: 1.2rem;
+  }
+  
+  .theme-card p {
+    font-size: 0.9rem;
+  }
+  
+  .storybook-iframe {
+    height: 500px;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .theme-card {
+    border: 2px solid #000;
+  }
+  
+  .theme-select-btn {
+    border: 2px solid #fff;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .theme-card,
+  .theme-select-btn,
+  .back-to-themes-btn {
+    transition: none;
+  }
+  
+  .theme-card:hover {
+    transform: none;
+  }
+}
